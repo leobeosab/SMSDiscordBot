@@ -1,3 +1,7 @@
 *.swp
 *.pyc
 config/secrets.json
+
+__pycache__/
+config/
+

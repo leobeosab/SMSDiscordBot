@@ -1,17 +1,22 @@
 from twilio.rest import Client
+from pprint import pprint
 
 # Handy manager for managing Twilio Messages
 class Manager:
 
-  #possible read twilio info from API at some point
-  def __init__(self, twilioSid, twilioToken, fromNumber):
-    self.client = Client(twilioSid, twilioToken)
-    self.fromNumber = fromNumber
+  def __init__(self, dbManager):
+    self.dbManager = dbManager
 
-  def send_text_message(self, toPhone, message):
-    message = self.client.messages.create(to=toPhone, from_=self.fromNumber, body=message)
+  # Create Client for individual servers
+  def createClient(self, serverID):
+    creds = self.dbManager.getAuth(serverID)
+    return { "client": Client(creds['sid'], creds['token']), "fromphone": creds['phonenumber']}
+    
+  def send_text_message(self, serverID, toPhone, message):
+    accountInfo = self.createClient(serverID)
+    message = accountInfo["client"].messages.create(to=toPhone, from_=accountInfo['fromphone'], body=message)
     return(message.sid)
 
-  def send_batch_message(self, recipients, message):
+  def send_batch_message(self, serverID, recipients, message):
     for recipient in recipients:
-      self.client.messages.create(to=recipient, from_=self.fromNumber, body=message)
+      self.send_text_message(serverID, recipient.number, message)

@@ -3,9 +3,9 @@ from pymongo import MongoClient
 class DBManager:
 
     def __init__(self):
-        username = ""
-        password = ""
-        url = ""
+        username = "dotasm"
+        password = "programmeacoffeeson"
+        url = "52.26.216.215"
         port = 27017
 
         self.client = MongoClient(url,

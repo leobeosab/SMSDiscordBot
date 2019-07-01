@@ -1,4 +1,5 @@
-import discord, os
+import os
+from modules import helpers, smsmanager, database 
 from discord.ext import commands
 from discord.utils import get
 from discord import Client
@@ -29,4 +30,4 @@ async def on_message(message):
         
         await message.channel.send('%d' %roles)
 
-BOT.run(os.environ['TEXTEEBOTTOKEN'])
+BOT.run(helpers.getSecretString("discord", "token"))

@@ -1,12 +1,14 @@
 from pymongo import MongoClient
+from modules.helpers import getServiceSecretSet
 
 class DBManager:
 
     def __init__(self):
-        username = "dotasm"
-        password = "programmeacoffeeson"
-        url = "52.26.216.215"
-        port = 27017
+        mongodbSecrets = getServiceSecretSet("mongodb")
+        username = mongodbSecrets["username"]
+        password = mongodbSecrets["password"]
+        url = mongodbSecrets["url"]
+        port = mongodbSecrets["port"]
 
         self.client = MongoClient(url,
             port=port,

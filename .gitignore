@@ -6,3 +6,4 @@ src/run.py
 __pycache__/
 config/
 
+.vscode/

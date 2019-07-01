@@ -45,7 +45,8 @@ class DBManager:
             {'_id': serverID}, {'$set': server}, upsert=True)
 
     def getServer(self, serverID):
-        return self.serverDB.find_one({'_id': serverID})
+        print(serverID)
+        return self.serverDB.find_one({'_id': str(serverID)})
 
     def addUserToOptedIn(self, serverID, memberID, phonenumber):
         server = self.getServer(serverID)

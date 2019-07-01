@@ -14,15 +14,16 @@ class SMS:
         creds = self.dbManager.getAuth(serverID)
         return {"client": Client(creds['sid'], creds['token']), "fromphone": creds['phonenumber']}
 
-    def send_text_message(self, serverID, toPhone, message):
-        accountInfo = self.createClient(serverID)
-        print(toPhone + " " + message)
+    def send_text_message(self, guild, toPhone, message):
+        accountInfo = self.createClient(guild.id)
+        message = guild.name + ": " + message
         try:
             accountInfo["client"].messages.create(
                 to=toPhone, from_=accountInfo['fromphone'], body=message)
         except:
             raise Exception('Error, sending message through Twillio')
 
-    def send_batch_message(self, serverID, recipients, message):
+    def send_batch_message(self, guild, recipients, message):
+        pprint(recipients)
         for recipient in recipients:
-            self.send_text_message(serverID, recipient.number, message)
+            self.send_text_message(guild, recipient['phonenumber'], message)

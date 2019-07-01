@@ -30,11 +30,36 @@ async def opt_in_to_smsing(ctx, phonenumber):
     memberID = str(ctx.author.id)
     DB.addUserToOptedIn(serverID, memberID, phonenumber)
     try:
-        SMS.send_text_message(serverID, phonenumber,
+        SMS.send_text_message(ctx.guild, phonenumber,
                               "You have signed up for {0}'s SMS notifcations!".format(ctx.guild.name))
         await ctx.send("Sent a confirmation message!")
     except:
         await ctx.send(TWILLIO_ERR_TEXT)
+
+
+@BOT.command(name="text")
+async def text_members_and_roles(ctx, message):
+    # Get lists of users for every type of mention in the message
+    users = []
+    users.extend(ctx.message.mentions)
+    users.extend(
+        *(channel.members for channel in ctx.message.channel_mentions))
+    users.extend(*(role.members for role in ctx.message.role_mentions))
+
+    # We just want the ids
+    userIDs = helpers.removeDuplicateUsersAndReturnIDs(users)
+
+    serverData = DB.getServer(ctx.guild.id)
+    if serverData is not None and serverData['opted-in-users'] is not None:
+        optedInUsers = serverData['opted-in-users']
+        pprint(userIDs)
+        pprint(optedInUsers)
+        receipients = list(filter(
+            lambda user: user['memberID'] in userIDs, optedInUsers))
+        SMS.send_batch_message(ctx.guild, receipients, message)
+        await ctx.send("Roger that homeslice!")
+    else:
+        await ctx.send("No one is opted in :(")
 
 
 @BOT.event

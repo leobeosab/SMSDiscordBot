@@ -1,5 +1,6 @@
 import json
 from pathlib import Path
+from pprint import pprint
 
 CONFIG_PATH = str(Path(__file__).parent.parent.parent.absolute()
                   ) + "/config/secrets.json"
@@ -26,3 +27,7 @@ def isAdmin(ctx):
         return True
     else:
         return False
+
+
+def removeDuplicateUsersAndReturnIDs(users):
+    return list(frozenset([*(str(user.id) for user in users)]))

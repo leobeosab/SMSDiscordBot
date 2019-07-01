@@ -2,7 +2,7 @@ import json
 from pathlib import Path
 
 CONFIG_PATH = str(Path(__file__).parent.parent.parent.absolute()) + "/config/secrets.json"
-print(CONFIG_PATH)
+
 def getSecretString(service, secret_key):
     try:
         with open(CONFIG_PATH) as f:

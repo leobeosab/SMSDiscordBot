@@ -1,10 +1,12 @@
 from pymongo import MongoClient
 from modules.helpers import getServiceSecretSet
+from pprint import pprint
 
 class DBManager:
 
     def __init__(self):
         mongodbSecrets = getServiceSecretSet("mongodb")
+        pprint(mongodbSecrets)
         username = mongodbSecrets["username"]
         password = mongodbSecrets["password"]
         url = mongodbSecrets["url"]

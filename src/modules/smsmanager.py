@@ -14,8 +14,11 @@ class SMS:
     
   def send_text_message(self, serverID, toPhone, message):
     accountInfo = self.createClient(serverID)
-    message = accountInfo["client"].messages.create(to=toPhone, from_=accountInfo['fromphone'], body=message)
-    return(message.sid)
+    try:
+      accountInfo["client"].messages.create(to=toPhone, from_=accountInfo['fromphone'], body=message)
+    except:
+      raise Exception('Error, sending message through Twillio')
+
 
   def send_batch_message(self, serverID, recipients, message):
     for recipient in recipients:

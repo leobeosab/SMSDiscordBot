@@ -4,8 +4,16 @@ from discord.ext import commands
 from discord.utils import get
 from discord import Client
 
-# Creates bot object, with command prefix to use like : $testCommand arg0 arg1 arg2
+# Creates bot object, with command prefix to use like : $testCommand arg0 arg1 arg2  //"$#5GH{cz4VCfE@B7",
 BOT = commands.Bot(command_prefix ='$')
+
+DB = database.DBManager()
+SMS = smsmanager.SMS(DB)
+
+@BOT.command(name="authenticate")
+async def add_twillio_creds(ctx, sid, token, phonenumber):
+    DB.addAuth(ctx.guild.id, sid, token, phonenumber)
+    await ctx.send("Twillio credentials + phone number noted!")
 
 @BOT.event
 async def on_ready():
@@ -29,5 +37,7 @@ async def on_message(message):
                         roles += role
         
         await message.channel.send('%d' %roles)
+    
+    await BOT.process_commands(message)
 
 BOT.run(helpers.getSecretString("discord", "token"))

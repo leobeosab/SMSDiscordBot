@@ -2,7 +2,7 @@ from twilio.rest import Client
 from pprint import pprint
 
 # Handy manager for managing Twilio Messages
-class Manager:
+class SMS:
 
   def __init__(self, dbManager):
     self.dbManager = dbManager

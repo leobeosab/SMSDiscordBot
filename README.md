@@ -11,7 +11,7 @@ Twilio integrated bot for managing groups of players to send sms to (if they hav
 ## Running
 1.  clone repo into SMSDiscordBot
 2.  install required packages (see above)
-3.  create a config/secrets.js [this](#config/secrets.js-file-structure) file structure
+3.  create a config/secrets.js [this](#user-content-configsecretsjs-file-structure) file structure
 4. run ```python3 bot.py```
 
 ### Textee Bot commands

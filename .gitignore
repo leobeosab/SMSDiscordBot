@@ -1,6 +1,7 @@
 *.swp
 *.pyc
 config/secrets.json
+src/run.py
 
 __pycache__/
 config/

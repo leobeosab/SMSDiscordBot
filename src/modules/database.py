@@ -1,6 +1,5 @@
 from pymongo import MongoClient
 from modules.helpers import getServiceSecretSet
-from pprint import pprint
 
 
 class DBManager:

@@ -1,5 +1,4 @@
 from twilio.rest import Client
-from pprint import pprint
 
 # Handy manager for managing Twilio Messages
 
@@ -24,6 +23,5 @@ class SMS:
             raise Exception('Error, sending message through Twillio')
 
     def send_batch_message(self, guild, recipients, message):
-        pprint(recipients)
         for recipient in recipients:
             self.send_text_message(guild, recipient['phonenumber'], message)

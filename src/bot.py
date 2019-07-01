@@ -4,7 +4,6 @@ from discord.ext import commands
 from discord.utils import get
 from discord import Client
 from discord.abc import GuildChannel
-from pprint import pprint
 
 # Creates bot object, with command prefix to use like : $testCommand arg0 arg1 arg2  //"$#5GH{cz4VCfE@B7",
 BOT = commands.Bot(command_prefix='$')
@@ -52,8 +51,6 @@ async def text_members_and_roles(ctx, message):
     serverData = DB.getServer(ctx.guild.id)
     if serverData is not None and serverData['opted-in-users'] is not None:
         optedInUsers = serverData['opted-in-users']
-        pprint(userIDs)
-        pprint(optedInUsers)
         receipients = list(filter(
             lambda user: user['memberID'] in userIDs, optedInUsers))
         SMS.send_batch_message(ctx.guild, receipients, message)

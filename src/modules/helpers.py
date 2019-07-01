@@ -1,6 +1,5 @@
 import json
 from pathlib import Path
-from pprint import pprint
 
 CONFIG_PATH = str(Path(__file__).parent.parent.parent.absolute()
                   ) + "/config/secrets.json"
